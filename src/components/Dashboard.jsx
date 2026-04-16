@@ -343,9 +343,13 @@ export default function Dashboard() {
                                         </td>
                                         <td className="px-6 md:px-10 py-6 md:py-8 text-slate-400 font-black text-[10px] md:text-xs">{exp.date}</td>
                                         <td className="px-6 md:px-10 py-6 md:py-8 text-right font-black text-slate-900 text-base md:text-xl">-₹{exp.amount.toLocaleString()}</td>
-                                        <td className="px-6 md:px-10 py-6 md:py-8 text-center opacity-0 group-hover:opacity-100 transition-opacity">
-                                            <button onClick={() => { setItemToDelete(exp.id); setShowDeleteModal(true); }} className="p-3 text-slate-200 hover:text-rose-500 hover:bg-rose-50 rounded-2xl transition-all scale-95 hover:scale-110">
-                                                <Trash2 size={24} />
+                                        <td className="px-6 md:px-10 py-6 md:py-8 text-center transition-all">
+                                            <button 
+                                                onClick={() => { setItemToDelete(exp.id); setShowDeleteModal(true); }} 
+                                                className="p-3 text-rose-500 hover:text-rose-700 hover:bg-rose-50 rounded-2xl transition-all scale-100 hover:scale-110 active:scale-95 shadow-sm border border-rose-100"
+                                                title="Delete Entry"
+                                            >
+                                                <Trash2 size={22} />
                                             </button>
                                         </td>
                                     </tr>

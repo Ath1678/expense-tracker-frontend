@@ -234,12 +234,13 @@ export default function Income() {
                                         <td className="px-6 md:px-10 py-6 md:py-8 text-right font-black text-emerald-600 text-lg md:text-xl">
                                             +₹{inc.amount.toLocaleString()}
                                         </td>
-                                        <td className="px-6 md:px-10 py-6 md:py-8 text-center opacity-0 group-hover:opacity-100 transition-opacity">
+                                        <td className="px-6 md:px-10 py-6 md:py-8 text-center transition-all">
                                             <button
                                                 onClick={() => triggerDelete(inc.id)}
-                                                className="p-3 hover:text-rose-500 hover:bg-rose-50 rounded-2xl transition-all scale-95 hover:scale-110"
+                                                className="p-3 text-rose-500 hover:text-rose-700 hover:bg-rose-50 rounded-2xl transition-all scale-100 hover:scale-110 active:scale-95 shadow-sm border border-rose-100"
+                                                title="Purge Record"
                                             >
-                                                <Trash2 size={24} />
+                                                <Trash2 size={22} />
                                             </button>
                                         </td>
                                     </tr>

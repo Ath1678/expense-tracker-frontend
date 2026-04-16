@@ -121,7 +121,7 @@ export default function Layout() {
                         <div className="w-10 h-10 rounded-xl overflow-hidden shadow-lg shadow-indigo-100 border border-white">
                             <img src="/logo.png" alt="Expensify Logo" className="w-full h-full object-cover" />
                         </div>
-                        <span className="text-lg font-black tracking-tighter text-slate-900 uppercase">Hub</span>
+                        <span className="text-xl font-black tracking-tighter text-indigo-600 uppercase">Expensify</span>
                     </div>
                     <button 
                         onClick={() => setIsMobileMenuOpen(true)}
