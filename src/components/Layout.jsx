@@ -40,8 +40,8 @@ export default function Layout() {
                 <div className="h-full flex flex-col p-6">
                     {/* Brand */}
                     <div className="flex items-center gap-4 mb-10 px-2 mt-2">
-                        <div className="bg-gradient-to-br from-indigo-600 to-blue-600 p-3 rounded-2xl text-white shadow-lg shadow-blue-100">
-                            <Wallet size={24} />
+                        <div className="w-12 h-12 rounded-2xl overflow-hidden shadow-lg shadow-blue-100 border-2 border-white">
+                            <img src="/logo.png" alt="Expensify Logo" className="w-full h-full object-cover" />
                         </div>
                         <div className="flex flex-col">
                             <span className="text-xl font-black tracking-tighter text-slate-900 leading-none">Expensify</span>
@@ -118,8 +118,8 @@ export default function Layout() {
                 {/* Mobile Header - High End */}
                 <header className="md:hidden bg-white/80 backdrop-blur-xl px-6 py-5 border-b border-slate-100 flex items-center justify-between sticky top-0 z-30">
                     <div className="flex items-center gap-3">
-                        <div className="bg-indigo-600 p-2 rounded-xl text-white shadow-lg shadow-indigo-100">
-                            <Wallet size={18} />
+                        <div className="w-10 h-10 rounded-xl overflow-hidden shadow-lg shadow-indigo-100 border border-white">
+                            <img src="/logo.png" alt="Expensify Logo" className="w-full h-full object-cover" />
                         </div>
                         <span className="text-lg font-black tracking-tighter text-slate-900 uppercase">Hub</span>
                     </div>
