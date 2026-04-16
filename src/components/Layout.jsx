@@ -25,9 +25,9 @@ export default function Layout() {
     };
 
     const navItems = [
-        { name: "Financial Hub", path: "/dashboard", icon: LayoutDashboard },
+        { name: "Financial Nexus", path: "/dashboard", icon: LayoutDashboard },
         { name: "Income Vault", path: "/income", icon: TrendingUp },
-        { name: "Recurring Hub", path: "/recurring", icon: Repeat },
+        { name: "Recurring Matrix", path: "/recurring", icon: Repeat },
     ];
 
     return (
@@ -45,7 +45,7 @@ export default function Layout() {
                         </div>
                         <div className="flex flex-col">
                             <span className="text-xl font-black tracking-tighter text-slate-900 leading-none">Expensify</span>
-                            <span className="text-[10px] font-black uppercase tracking-widest text-blue-500 mt-1">Premium Hub</span>
+                            <span className="text-[10px] font-black uppercase tracking-widest text-indigo-600 mt-1">Premium Portal</span>
                         </div>
                         {/* Close button for mobile */}
                         <button onClick={() => setIsMobileMenuOpen(false)} className="md:hidden ml-auto text-slate-400 hover:text-slate-900 transition-colors">

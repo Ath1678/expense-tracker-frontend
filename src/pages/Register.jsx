@@ -136,7 +136,7 @@ export default function Register() {
                 
                  <div className="mt-10 flex items-center justify-center gap-8 opacity-25 font-black text-[9px] uppercase tracking-[0.3em] text-slate-400">
                     <span className="flex items-center gap-2"><ShieldCheck size={12} /> Encrypted Access</span>
-                    <span className="flex items-center gap-2">v2.0 Premium Hub</span>
+                    <span className="flex items-center gap-2">v2.0 Premium Nexus</span>
                 </div>
             </div>
         </div>

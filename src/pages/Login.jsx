@@ -63,7 +63,7 @@ export default function Login() {
                                 <img src="/logo.png" alt="Expensify Logo" className="w-full h-full object-cover" />
                             </div>
                             <h1 className="text-3xl md:text-4xl font-[900] tracking-tighter mb-2">Expensify</h1>
-                            <p className="text-blue-50/80 font-bold uppercase tracking-[0.2em] text-[10px] md:text-xs opacity-90">Professional Financial Hub</p>
+                            <p className="text-blue-50/80 font-bold uppercase tracking-[0.2em] text-[10px] md:text-xs opacity-90">Professional Financial Nexus</p>
                         </div>
                         {/* Elegant Light Effects */}
                         <div className="absolute top-0 right-0 w-40 h-40 bg-white/10 rounded-full -mr-20 -mt-20 blur-2xl"></div>
@@ -138,7 +138,7 @@ export default function Login() {
                 {/* Standardized Micro Footer */}
                 <div className="mt-10 flex items-center justify-center gap-8 opacity-25 font-black text-[9px] uppercase tracking-[0.3em] text-slate-400">
                     <span className="flex items-center gap-2"><ShieldCheck size={12} /> Encrypted Access</span>
-                    <span className="flex items-center gap-2">v2.0 Premium Hub</span>
+                    <span className="flex items-center gap-2">v2.0 Premium Nexus</span>
                 </div>
             </div>
         </div>

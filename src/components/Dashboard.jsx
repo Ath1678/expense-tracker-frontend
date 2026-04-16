@@ -216,7 +216,7 @@ export default function Dashboard() {
                                 <Wallet size={28} className="text-blue-200" />
                             </div>
                             <div>
-                                <h2 className="text-2xl md:text-4xl font-black tracking-tighter">Financial Hub</h2>
+                                <h2 className="text-2xl md:text-4xl font-black tracking-tighter">Financial Nexus</h2>
                                 <p className="text-blue-100/80 font-bold uppercase tracking-widest text-[10px] md:text-xs">Security Protocol Active</p>
                             </div>
                         </div>
@@ -324,7 +324,7 @@ export default function Dashboard() {
                                         <div className="bg-slate-50 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4 border border-slate-100">
                                             <LayoutPanelTop size={32} className="text-slate-200" />
                                         </div>
-                                        <p className="font-black text-slate-800 text-lg">Empty Hub</p>
+                                        <p className="font-black text-slate-800 text-lg">Empty Nexus</p>
                                         <p className="text-slate-400 text-sm font-bold tracking-widest uppercase mt-1">Ready for Initial Inflow</p>
                                     </td>
                                 </tr>
@@ -397,7 +397,7 @@ export default function Dashboard() {
                 <div className="fixed inset-0 bg-slate-900/40 backdrop-blur-md z-[100] flex items-center justify-center p-4">
                     <div className="bg-white rounded-3xl md:rounded-[2.5rem] shadow-2xl w-full max-w-sm p-8 text-center animate-in zoom-in-95 duration-200">
                         <div className="px-4 pt-4 pb-4 border-b border-slate-50 mb-6">
-                            <h3 className="text-2xl font-black text-slate-900">Calibrate Hub</h3>
+                            <h3 className="text-2xl font-black text-slate-900">Calibrate System</h3>
                             <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-1">Strategic Limit Phase</p>
                         </div>
                         <form onSubmit={updateLimit} className="space-y-6">

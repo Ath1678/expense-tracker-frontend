@@ -171,7 +171,7 @@ export default function Recurring() {
                                 <Repeat size={28} className="text-indigo-200" />
                             </div>
                             <div>
-                                <h2 className="text-2xl md:text-4xl font-black tracking-tighter">Recurring Hub</h2>
+                                <h2 className="text-2xl md:text-4xl font-black tracking-tighter">Recurring Matrix</h2>
                                 <p className="text-indigo-100/80 font-bold uppercase tracking-[0.2em] text-[10px] md:text-xs">Subscription Matrix Active</p>
                             </div>
                         </div>
