@@ -41,7 +41,7 @@ export default function Layout() {
                     {/* Brand */}
                     <div className="flex items-center gap-4 mb-10 px-2 mt-2">
                         <div className="w-12 h-12 rounded-2xl overflow-hidden shadow-lg shadow-blue-100 border-2 border-white">
-                            <img src="/logo.svg" alt="Spendly Logo" className="w-full h-full object-cover" />
+                            <img src="/logo.png" alt="Spendly Logo" className="w-full h-full object-cover" />
                         </div>
                         <div className="flex flex-col">
                             <span className="text-xl font-black tracking-tighter text-slate-900 leading-none">Spendly</span>
@@ -119,7 +119,7 @@ export default function Layout() {
                 <header className="md:hidden bg-white/80 backdrop-blur-xl px-6 py-5 border-b border-slate-100 flex items-center justify-between sticky top-0 z-30">
                     <div className="flex items-center gap-3">
                         <div className="w-10 h-10 rounded-xl overflow-hidden shadow-lg shadow-indigo-100 border border-white">
-                            <img src="/logo.svg" alt="Spendly Logo" className="w-full h-full object-cover" />
+                            <img src="/logo.png" alt="Spendly Logo" className="w-full h-full object-cover" />
                         </div>
                         <span className="text-xl font-black tracking-tighter text-indigo-600 uppercase">Spendly</span>
                     </div>

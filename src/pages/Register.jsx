@@ -59,7 +59,7 @@ export default function Register() {
                     <div className="bg-gradient-to-br from-[#4f46e5] via-[#3b82f6] to-[#6366f1] p-10 md:p-12 text-white text-center relative">
                         <div className="relative z-10 flex flex-col items-center">
                             <div className="w-16 h-16 rounded-[1.25rem] overflow-hidden shadow-2xl mb-4 border-4 border-white/20 backdrop-blur-sm">
-                                <img src="/logo.svg" alt="Spendly Logo" className="w-full h-full object-cover" />
+                                <img src="/logo.png" alt="Spendly Logo" className="w-full h-full object-cover" />
                             </div>
                             <h1 className="text-3xl md:text-4xl font-[900] tracking-tighter mb-2">Spendly</h1>
                             <p className="text-blue-50/80 font-bold uppercase tracking-[0.2em] text-[10px] md:text-xs opacity-90">Create New Identity</p>
