@@ -49,6 +49,21 @@ const IncomeService = {
             throw err;
         }
     },
+
+    updateIncome: async (id, income) => {
+        try {
+            const res = await fetch(`${API_URL}/${id}`, {
+                method: "PUT",
+                headers: getAuthHeaders(),
+                body: JSON.stringify(income),
+            });
+            if (!res.ok) throw new Error("Failed to update income");
+            return await res.json();
+        } catch (err) {
+            console.error("❌ Update Income Error:", err);
+            throw err;
+        }
+    },
 };
 
 export default IncomeService;

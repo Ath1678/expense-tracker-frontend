@@ -56,6 +56,21 @@ const ExpenseService = {
       throw err;
     }
   },
+  
+  updateExpense: async (id, expense) => {
+    try {
+      const res = await fetch(`${API_URL}/${id}`, {
+        method: "PUT",
+        headers: getAuthHeaders(),
+        body: JSON.stringify(expense),
+      });
+      if (!res.ok) throw new Error("Failed to update expense");
+      return await res.json();
+    } catch (err) {
+      console.error("❌ Update Error:", err);
+      throw err;
+    }
+  },
 };
 
 export default ExpenseService;

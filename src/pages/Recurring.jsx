@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo, useCallback } from "react";
-import { Plus, Trash2, Repeat, CheckCircle, AlertCircle, Calendar, CreditCard, Clock, Search, Filter, ShieldCheck, ArrowRight, XCircle } from "lucide-react";
+import { Plus, Trash2, Repeat, CheckCircle, AlertCircle, Calendar, CreditCard, Clock, Search, Filter, ShieldCheck, ArrowRight, XCircle, Edit3 } from "lucide-react";
 import RecurringService from "../services/RecurringService";
 
 export default function Recurring() {
@@ -11,6 +11,8 @@ export default function Recurring() {
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [showPaymentModal, setShowPaymentModal] = useState(false);
     const [showStatusModal, setShowStatusModal] = useState(false);
+    const [isEditing, setIsEditing] = useState(false);
+    const [editingId, setEditingId] = useState(null);
     
     // States
     const [itemToDelete, setItemToDelete] = useState(null);
@@ -48,19 +50,35 @@ export default function Recurring() {
         setLoading(false);
     };
 
-    // OPTIMISTIC UI: INSTANT TRACKER CREATION
-    const addRecurring = async (e) => {
-        e.preventDefault();
-        const tempId = Date.now();
-        const newItem = { 
-            id: tempId, 
-            title, 
-            amount: Number(amount), 
-            category, 
-            dayOfMonth: Number(dayOfMonth),
-            optimistic: true 
-        };
+    const handleOpModal = (item = null) => {
+        if (item) {
+            setIsEditing(true);
+            setEditingId(item.id);
+            setTitle(item.title);
+            setAmount(item.amount);
+            setCategory(item.category);
+            setDayOfMonth(item.dayOfMonth.toString());
+        } else {
+            setIsEditing(false);
+            setEditingId(null);
+            resetForm();
+        }
+        setShowModal(true);
+    };
 
+    const submitRecurring = async (e) => {
+        e.preventDefault();
+        const data = { title, amount: Number(amount), category, dayOfMonth: Number(dayOfMonth) };
+        if (isEditing) {
+            updateRecurring(data);
+        } else {
+            addRecurring(data);
+        }
+    };
+
+    const addRecurring = async (data) => {
+        const tempId = Date.now();
+        const newItem = { id: tempId, ...data, optimistic: true };
         const original = [...recurringItems];
         setRecurringItems([newItem, ...recurringItems]);
         setShowModal(false);
@@ -73,7 +91,23 @@ export default function Recurring() {
             triggerStatus('success', 'Tracker online.');
         } catch (err) {
             setRecurringItems(original);
-            triggerStatus('error', 'Communication link failed.');
+            triggerStatus('error', 'Sync failed.');
+        }
+    };
+
+    const updateRecurring = async (data) => {
+        const original = [...recurringItems];
+        setRecurringItems(recurringItems.map(item => item.id === editingId ? { ...item, ...data, optimistic: true } : item));
+        setShowModal(false);
+        triggerStatus('success', 'Calibrating frequency...');
+
+        try {
+            const updated = await RecurringService.updateRecurring(editingId, data);
+            setRecurringItems(prev => prev.map(item => item.id === editingId ? updated : item));
+            triggerStatus('success', 'Tracker updated.');
+        } catch (err) {
+            setRecurringItems(original);
+            triggerStatus('error', 'Update failed.');
         }
     };
 
@@ -208,7 +242,7 @@ export default function Recurring() {
                         </select>
                     </div>
                 </div>
-                <button onClick={() => setShowModal(true)} className="w-full md:w-auto bg-indigo-600 hover:bg-slate-900 text-white px-8 py-4 rounded-2xl font-black flex items-center justify-center gap-2 shadow-xl shadow-indigo-100 transition-all hover:-translate-y-1 active:scale-95 text-sm md:text-base">
+                <button onClick={() => handleOpModal()} className="w-full md:w-auto bg-indigo-600 hover:bg-slate-900 text-white px-8 py-4 rounded-2xl font-black flex items-center justify-center gap-2 shadow-xl shadow-indigo-100 transition-all hover:-translate-y-1 active:scale-95 text-sm md:text-base">
                     <Plus size={22} /> INJECT TRACKER
                 </button>
             </div>
@@ -250,17 +284,14 @@ export default function Recurring() {
                                         <div><span className="text-[10px] uppercase font-black text-slate-300 tracking-[0.2em] block mb-1">Commitment</span><span className="text-3xl font-black text-slate-900">₹{item.amount.toLocaleString()}</span></div>
                                         <div className="flex flex-col items-end">{paid ? <span className="flex items-center gap-2 text-[10px] font-black text-emerald-600 bg-emerald-50 px-4 py-2 rounded-full border border-emerald-100"><ShieldCheck size={14} /> AUTHORIZED</span> : <span className="flex items-center gap-2 text-[10px] font-black text-amber-600 bg-amber-50 px-4 py-2 rounded-full border border-amber-100 animate-pulse"><Clock size={14} /> PENDING</span>}</div>
                                     </div>
-                                    <div className="flex gap-4">
-                                        <button onClick={() => triggerPayment(item.id, item.title)} disabled={paid || item.optimistic} className={`flex-1 py-4 rounded-2xl font-black text-xs transition-all flex items-center justify-center gap-2 ${paid ? "bg-slate-50 text-slate-300 shadow-inner" : "bg-indigo-600 text-white hover:bg-slate-900 shadow-xl shadow-indigo-100 hover:shadow-none active:scale-95"}`}>
-                                            {paid ? "SETTLED" : "APPROVE PAY"}{!paid && <ArrowRight size={18} />}
+                                    <div className="flex gap-3">
+                                        <button onClick={() => triggerPayment(item.id, item.title)} disabled={paid || item.optimistic} className={`flex-1 py-3.5 rounded-2xl font-black text-xs transition-all flex items-center justify-center gap-2 ${paid ? "bg-slate-50 text-slate-300 shadow-inner" : "bg-indigo-600 text-white hover:bg-slate-900 shadow-lg shadow-indigo-100"}`}>
+                                            {paid ? "SETTLED" : "PAY"}{!paid && <ArrowRight size={16} />}
                                         </button>
-                                        <button 
-                                            onClick={() => triggerDelete(item.id)} 
-                                            className="p-4 text-rose-500 hover:text-rose-700 hover:bg-rose-50 rounded-2xl transition-all scale-100 hover:scale-110 active:scale-95 border border-rose-100 shadow-sm"
-                                            title="Deactivate Tracker"
-                                        >
-                                            <Trash2 size={24} />
-                                        </button>
+                                        <div className="flex gap-2">
+                                            <button onClick={() => handleOpModal(item)} className="p-3.5 text-indigo-500 hover:text-white hover:bg-indigo-600 rounded-2xl transition-all border border-indigo-50 shadow-sm active:scale-95"><Edit3 size={20} /></button>
+                                            <button onClick={() => triggerDelete(item.id)} className="p-3.5 text-rose-500 hover:text-white hover:bg-rose-600 rounded-2xl transition-all border border-rose-50 shadow-sm active:scale-95"><Trash2 size={20} /></button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -269,22 +300,21 @@ export default function Recurring() {
                 </div>
             )}
 
-            {/* Premium Add Modal - Instant Feedback */}
             {showModal && (
-                <div className="fixed inset-0 bg-slate-900/40 backdrop-blur-md z-[100] flex items-center justify-center p-4">
-                    <div className="bg-white rounded-[2.5rem] shadow-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto animate-in zoom-in-95 duration-200 scrollbar-hide">
+                <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-xl z-[100] flex items-center justify-center p-4 overflow-y-auto">
+                    <div className="bg-white rounded-[2.5rem] shadow-2xl w-full max-w-lg mb-auto mt-auto animate-in zoom-in-95 duration-300">
                         <div className="px-10 pt-10 pb-6 border-b border-slate-50 flex justify-between items-start">
-                            <div><h3 className="text-3xl font-black text-slate-900">New Tracker</h3><p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-1">Periodic Commitment Initialization</p></div>
-                            <button onClick={() => setShowModal(false)} className="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center text-slate-400 hover:text-slate-900 font-bold">×</button>
+                            <div><h3 className="text-3xl font-black text-slate-900">{isEditing ? 'Refine Tracker' : 'New Tracker'}</h3><p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-1">{isEditing ? 'Update Periodic Commitment' : 'Periodic Commitment Initialization'}</p></div>
+                            <button onClick={() => setShowModal(false)} className="w-12 h-12 rounded-full bg-slate-50 flex items-center justify-center text-slate-400 hover:bg-rose-50 hover:text-rose-500 transition-all font-bold">×</button>
                         </div>
-                        <form onSubmit={addRecurring} className="p-10 pt-8 space-y-6">
+                        <form onSubmit={submitRecurring} className="p-10 pt-8 space-y-6">
                             <div className="space-y-1.5"><label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-2">Tracker Identifier</label><input required className="w-full bg-slate-50 border-2 border-transparent focus:border-indigo-100 focus:bg-white px-6 py-4 rounded-2xl outline-none focus:ring-8 focus:ring-indigo-500/5 font-black" value={title} onChange={e => setTitle(e.target.value)} placeholder="e.g. AWS Multi-Region" /></div>
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                                 <div className="space-y-1.5"><label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-2">Value (₹)</label><input required type="number" className="w-full bg-slate-50 border-2 border-transparent focus:border-indigo-100 focus:bg-white px-6 py-4 rounded-2xl outline-none focus:ring-8 focus:ring-indigo-500/5 font-black" value={amount} onChange={e => setAmount(e.target.value)} placeholder="0.00" /></div>
                                 <div className="space-y-1.5"><label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-2">Cycle Day (1-31)</label><input required type="number" min="1" max="31" className="w-full bg-slate-50 border-2 border-transparent focus:border-indigo-100 focus:bg-white px-6 py-4 rounded-2xl outline-none focus:ring-8 focus:ring-indigo-500/5 font-black" value={dayOfMonth} onChange={e => setDayOfMonth(e.target.value)} /></div>
                             </div>
                             <div className="space-y-1.5"><label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Category</label><select className="w-full bg-slate-50 border-2 border-transparent focus:border-indigo-100 focus:bg-white px-6 py-4 rounded-2xl outline-none focus:ring-8 focus:ring-indigo-500/5 font-black appearance-none" value={category} onChange={e => setCategory(e.target.value)}><option>Subscription</option><option>Rent</option><option>Bills</option><option>Health</option><option>Other</option></select></div>
-                            <div className="flex flex-col sm:flex-row gap-4 pt-4"><button type="button" onClick={() => setShowModal(false)} className="flex-1 py-4 bg-slate-50 text-slate-400 rounded-2xl font-black order-2 sm:order-1 transition-all">STANDBY</button><button type="submit" className="flex-2 sm:flex-[2] py-4 bg-indigo-600 text-white rounded-2xl font-black shadow-xl shadow-indigo-100 hover:bg-slate-900 transition-all active:scale-95 order-1 sm:order-2">EXECUTE INITIALIZATION</button></div>
+                            <button type="submit" className="w-full py-4 bg-indigo-600 text-white rounded-2xl font-black shadow-xl shadow-indigo-100 hover:bg-slate-900 transition-all active:scale-95">{isEditing ? 'COMMIT UPDATES' : 'EXECUTE INITIALIZATION'}</button>
                         </form>
                     </div>
                 </div>

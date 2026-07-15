@@ -62,6 +62,21 @@ const RecurringService = {
             console.error("❌ Payment Error:", err);
             throw err;
         }
+    },
+
+    updateRecurring: async (id, item) => {
+        try {
+            const res = await fetch(`${API_URL}/${id}`, {
+                method: "PUT",
+                headers: getAuthHeaders(),
+                body: JSON.stringify(item),
+            });
+            if (!res.ok) throw new Error("Failed to update recurring expense");
+            return await res.json();
+        } catch (err) {
+            console.error("❌ Update Error:", err);
+            throw err;
+        }
     }
 };
 
