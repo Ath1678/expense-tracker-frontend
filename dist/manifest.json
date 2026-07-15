@@ -3,9 +3,9 @@
   "name": "Spendly Premium Finance Hub",
   "icons": [
     {
-      "src": "favicon.png",
+      "src": "favicon.svg",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/svg+xml"
     },
     {
       "src": "logo192.png",
